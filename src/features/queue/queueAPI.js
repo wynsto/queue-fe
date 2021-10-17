@@ -2,7 +2,7 @@
 export function createQueue(name) {
     const data = { name };
 
-    return fetch('http://localhost:8080/queue', {
+    return fetch('https://api.queu.eu/queue', {
       method: 'POST', // or 'PUT'
       mode: 'cors',
       headers: {
