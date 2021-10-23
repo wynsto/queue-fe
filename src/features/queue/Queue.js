@@ -4,6 +4,7 @@ import { selectQueue, setModalStatus, createQueueAsync, getQueuesAsync } from '.
 import { QueueForm } from './QueueForm'
 import { Button } from 'baseui/button';
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 
 import {
   Modal,
@@ -66,7 +67,7 @@ export function Queue() {
                 )}
             </div>
             <div>
-                {queue?.queues?.map(item => <div key={item.id}>{JSON.stringify(item)}</div>)}
+                {queue?.queues?.map(item => <Link key={item.id} to={'q/' + item.id}><div>{item.fullname}</div></Link>)}
             </div>
 
             <div>
