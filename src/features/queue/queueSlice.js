@@ -10,7 +10,8 @@ const initialState = {
 export const createQueueAsync = createAsyncThunk(
       'queue/createQueue',
       async (data) => {
-        const response = await createQueue(data)
+        const {queueName, accessToken} = data
+        const response = await createQueue(queueName, accessToken)
         return response.data
       }
   )

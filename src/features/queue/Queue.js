@@ -18,6 +18,8 @@ export function Queue() {
 
     const queue = useSelector(selectQueue)
     const dispatch = useDispatch()
+
+    const [accessToken, setAccessToken] = useState('')
    
     const [queueName, setQueueName] = useState('')
 
@@ -32,18 +34,19 @@ export function Queue() {
     }
 
     function submit() {
-        dispatch(createQueueAsync(queueName))
+        dispatch(createQueueAsync({queueName, accessToken}))
     }
 
     useEffect(() =>{
         const getQueues = async () => {
             const accessToken = await getAccessTokenSilently();
+            setAccessToken(accessToken)
             dispatch(getQueuesAsync(accessToken))
         }
         if (isAuthenticated) {
             getQueues()
         }
-    }, [getAccessTokenSilently, dispatch, isAuthenticated])
+    }, [getAccessTokenSilently, dispatch, isAuthenticated, setAccessToken])
 
     if (isLoading) {
         return <div>Loading ...</div>;

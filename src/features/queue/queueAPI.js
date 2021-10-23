@@ -1,5 +1,5 @@
 // A mock function to mimic making an async request for data
-export function createQueue(name) {
+export function createQueue(name, accessToken) {
     const data = { fullname: name };
 
     return fetch('https://api.queu.eu/queues', {
@@ -7,6 +7,7 @@ export function createQueue(name) {
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(data),
     })
