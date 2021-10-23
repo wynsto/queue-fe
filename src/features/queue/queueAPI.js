@@ -1,8 +1,8 @@
 // A mock function to mimic making an async request for data
 export function createQueue(name) {
-    const data = { name };
+    const data = { fullname: name };
 
-    return fetch('https://api.queu.eu/queue', {
+    return fetch('https://api.queu.eu/queues', {
       method: 'POST', // or 'PUT'
       mode: 'cors',
       headers: {
@@ -18,4 +18,21 @@ export function createQueue(name) {
       console.error('Error:', error);
     });
   }
-  
+
+export function getQueues(accessToken) {
+    return fetch('https://api.queu.eu/queues', {
+      method: 'GET', // or 'PUT'
+      mode: 'cors',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      return data.queues
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }

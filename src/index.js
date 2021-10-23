@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider, DebugEngine} from 'styletron-react';
 import {LightTheme, BaseProvider} from 'baseui';
-
+import { Auth0Provider } from "@auth0/auth0-react";
 
 
 const debug =
@@ -20,15 +20,23 @@ const engine = new Styletron();
 
 ReactDOM.render(
   <React.StrictMode>
-    <StyletronProvider value={engine} debug={debug}>
-      <BaseProvider theme={LightTheme}>
-        <Provider store={store}>
-          <ThemeContext.Provider value="red">
-            <App />
-          </ThemeContext.Provider>
-        </Provider>
-      </BaseProvider>
-    </StyletronProvider>
+     <Auth0Provider
+      domain="dev-mmfk4f-p.us.auth0.com"
+      clientId="hfvpZ7WxUbRDCNp616omPqj8s0bsHRi3"
+      redirectUri={window.location.origin}
+      useRefreshTokens={true}
+      audience="https://api.queu.eu/"
+      >
+      <StyletronProvider value={engine} debug={debug}>
+        <BaseProvider theme={LightTheme}>
+          <Provider store={store}>
+            <ThemeContext.Provider value="red">
+              <App />
+            </ThemeContext.Provider>
+          </Provider>
+        </BaseProvider>
+      </StyletronProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch,  } from 'react-redux';
-import { selectQueue, setModalStatus, createQueueAsync } from './queueSlice';
+import { selectQueue, setModalStatus, createQueueAsync, getQueuesAsync } from './queueSlice';
 import { QueueForm } from './QueueForm'
 import {Button} from 'baseui/button';
+import { useAuth0 } from "@auth0/auth0-react";
+
 import {
   Modal,
   ModalHeader,
@@ -12,9 +14,13 @@ import {
 } from 'baseui/modal';
 
 export function Queue() {
+    const { user, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
+    const [userMetadata, setUserMetadata] = useState(null);
+
+
     const queue = useSelector(selectQueue)
     const dispatch = useDispatch()
-
+   
     const [queueName, setQueueName] = useState('')
 
     function close() {
@@ -31,9 +37,45 @@ export function Queue() {
         dispatch(createQueueAsync(queueName))
     }
 
+    useEffect(() =>{
+
+        const getQueues = async () => {
+            const accessToken = await getAccessTokenSilently();
+            dispatch(getQueuesAsync(accessToken))
+        }
+        if (isAuthenticated) {
+            getQueues()
+        }
+
+        
+    }, [getAccessTokenSilently, dispatch, isAuthenticated])
+
+    if (isLoading) {
+        return <div>Loading ...</div>;
+    }
+
     return (
         <div>
             <div>{queueName}</div>
+            <div>
+            {isAuthenticated && (
+            <div>
+                <img src={user.picture} alt={user.name} />
+                <h2>{user.name}</h2>
+                <p>{user.email}</p>
+                <h3>User Metadata</h3>
+                {userMetadata ? (
+                <pre>{JSON.stringify(userMetadata, null, 2)}</pre>
+                ) : (
+                "No user metadata defined"
+                )}
+            </div>
+            )}
+            </div>
+            <div>
+            {queue?.queues?.map(item => <div key={item.id}>{JSON.stringify(item)}</div>)}
+            </div>
+
             <div>
                 <Button onClick={open}>Create a Queue</Button>
             </div>

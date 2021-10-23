@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createQueue } from './queueAPI';
+import { createQueue, getQueues } from './queueAPI';
 
 const initialState = {
     isShowForm: false,
@@ -15,6 +15,15 @@ export const createQueueAsync = createAsyncThunk(
       }
   )
 
+export const getQueuesAsync = createAsyncThunk(
+    'queue/getQueues',
+    async (data) => {
+        const response = await getQueues(data)
+        return response
+    }
+)
+
+
 export const queueSlice = createSlice({
     name: 'queue',
     initialState,
@@ -24,16 +33,23 @@ export const queueSlice = createSlice({
         },
         setModalStatus: (state, action) => {
             state.isShowForm = action.payload
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(createQueueAsync.pending, (state) => {
-            state.status = 'loading';
+                state.status = 'loading';
             })
             .addCase(createQueueAsync.fulfilled, (state, action) => {
-            state.status = 'idle';
-            state.queues.push(action.payload);
+                state.status = 'idle';
+                state.queues.push(action.payload);
+            })
+            .addCase(getQueuesAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(getQueuesAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.queues = action.payload;
             });
     },
 })
