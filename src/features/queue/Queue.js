@@ -67,7 +67,7 @@ export function Queue() {
                 )}
             </div>
             <div>
-                {queue?.queues?.map(item => <Link key={item.id} to={'q/' + item.id}><div>{item.fullname}</div></Link>)}
+                {queue?.queues?.map(item => <Link key={item.id} to={'/q/' + item.id}><div>{item.fullname}</div></Link>)}
             </div>
 
             <div>

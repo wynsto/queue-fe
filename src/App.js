@@ -5,7 +5,7 @@ import './App.css';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import { useAuth0 } from "@auth0/auth0-react";
-import { Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import QueueDetail from './components/QueueDetail';
 import Home from './components/Home';
 import history from "./utils/history";
