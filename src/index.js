@@ -8,15 +8,35 @@ import * as serviceWorker from './serviceWorker';
 
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider, DebugEngine} from 'styletron-react';
-import {LightTheme, BaseProvider} from 'baseui';
+import { BaseProvider } from 'baseui';
 import { Auth0Provider } from "@auth0/auth0-react";
-
+import {colors} from 'baseui/tokens';
+import {createTheme, lightThemePrimitives} from 'baseui';
 
 const debug =
   process.env.NODE_ENV === "production" ? void 0 : new DebugEngine();
 const ThemeContext = React.createContext('light');
   export { ThemeContext };
 const engine = new Styletron();
+
+const primitives = {
+  ...lightThemePrimitives,
+  primary: colors.platinum800,
+  buttonPrimaryFill: '#253A47',
+  buttonPrimaryHover: '#30424D',
+  colorPrimary: colors.platinum800,
+  background: '#66A3BB',
+  primary50: colors.platinum50,
+  primary100: colors.platinum100,
+  primary200: colors.platinum200,
+  primary300: colors.platinum300,
+  primary400: colors.platinum400,
+  primary500: colors.platinum500,
+  primary600: colors.platinum600,
+  primary700: colors.platinum700,
+};
+const theme = createTheme(primitives);
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -28,9 +48,9 @@ ReactDOM.render(
       audience="https://api.queu.eu/"
       >
       <StyletronProvider value={engine} debug={debug}>
-        <BaseProvider theme={LightTheme}>
+        <BaseProvider theme={theme}>
           <Provider store={store}>
-            <ThemeContext.Provider value="red">
+            <ThemeContext.Provider value="#66A3BB">
               <App />
             </ThemeContext.Provider>
           </Provider>
