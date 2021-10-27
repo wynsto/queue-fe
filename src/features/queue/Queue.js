@@ -5,6 +5,7 @@ import { QueueForm } from './QueueForm'
 import { Button } from 'baseui/button';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
+import {ListItem, ListItemLabel} from 'baseui/list';
 
 import {
   Modal,
@@ -67,7 +68,14 @@ export function Queue() {
                 )}
             </div>
             <div>
-                {queue?.queues?.map(item => <Link key={item.id} to={'/q/' + item.id}><div>{item.fullname}</div></Link>)}
+                <ul>
+                    {queue?.queues?.map(item =>{
+                    return (<ListItem key={item.id}>
+                        <ListItemLabel><Link  to={'/q/' + item.id}><div>{item.fullname}</div></Link></ListItemLabel>
+                    </ListItem> )
+                    })}
+                </ul>
+                
             </div>
 
             <div>
