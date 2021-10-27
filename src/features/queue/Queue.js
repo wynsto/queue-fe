@@ -71,7 +71,7 @@ export function Queue() {
                 <ul>
                     {queue?.queues?.map(item =>{
                     return (<ListItem key={item.id}>
-                        <ListItemLabel><Link  to={'/q/' + item.id}><div>{item.fullname}</div></Link></ListItemLabel>
+                        <ListItemLabel><Link  to={'/q/' + item.id}>{item.fullname}</Link></ListItemLabel>
                     </ListItem> )
                     })}
                 </ul>
