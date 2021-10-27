@@ -11,9 +11,6 @@ function App() {
     <Router history={history}>
     <div className="App">
       <Nav />
-      <header className="App-header">
-       
-      </header>
       <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/create" component={Home} />
